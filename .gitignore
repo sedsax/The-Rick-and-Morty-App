@@ -30,6 +30,9 @@ migrate_working_dir/
 .pub-cache/
 .pub/
 /build/
+.packages
+pubspec.lock
+.idea/
 
 # Symbolication related
 app.*.symbols
@@ -38,6 +41,27 @@ app.*.symbols
 app.*.map.json
 
 # Android Studio will place build artifacts here
+.android/
+build/
+*/build/
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# iOS specific
+ios/Flutter/.last_build_id
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/Flutter.framework/
+ios/Flutter/App.framework/
+ios/Flutter/Flutter.podspec
+*.xcworkspace
+*.xcodeproj/project.xcworkspace/
+*.xcodeproj/xcuserdata/
+
+# macOS
+macos/Flutter/ephemeral/
+
+# Other
+.DS_Store
+*.log
