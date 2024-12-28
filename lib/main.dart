@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:ricky_and_mortypp/app/theme.dart';
+import 'package:ricky_and_mortypp/views/app_view.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -10,27 +10,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Ricky and Morty App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(),
-    );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Ricky and Morty App'),
-      ),
-      body: const Center(
-        child: Text('Hello, Ricky and Morty!'),
-      ),
-    );
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.lightTheme,
+        title: 'Material App',
+        home: const AppView());
   }
 }
