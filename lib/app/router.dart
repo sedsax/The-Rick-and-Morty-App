@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'package:ricky_and_mortypp/views/app_view.dart';
 import 'package:ricky_and_mortypp/views/screens/characters_view/characters_view.dart';
+import 'package:ricky_and_mortypp/views/screens/characters_view/characters_viewmodel.dart';
 import 'package:ricky_and_mortypp/views/screens/favorites_view/favorites_view.dart';
 import 'package:ricky_and_mortypp/views/screens/locations_view/locations_view.dart';
 import 'package:ricky_and_mortypp/views/screens/sections_view/sections_view.dart';
@@ -10,7 +12,7 @@ import 'package:ricky_and_mortypp/views/screens/sections_view/sections_view.dart
 final _routerKey = GlobalKey<NavigatorState>();
 
 class AppRoutes {
-  AppRoutes._(); 
+  AppRoutes._();
 
   static const characters = '/';
   static const favorites = '/favorites';
@@ -30,7 +32,9 @@ final router = GoRouter(
           routes: [
             GoRoute(
               path: AppRoutes.characters,
-              builder: (context, state) => const CharactersView(),
+              builder: (context, state) => ChangeNotifierProvider(
+                  create: (context) => CharactersViewModel(),
+                  child: const CharactersView()),
             ),
           ],
         ),

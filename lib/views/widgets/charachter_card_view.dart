@@ -1,18 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:ricky_and_mortypp/models/characters_model.dart';
 
 class CharachterCardView extends StatelessWidget {
-  final String image;
-  final String name;
-  final String status;
-  final String type;
-  final String origin;
-  const CharachterCardView(
-      {super.key,
-      required this.image,
-      required this.name,
-      required this.status,
-      required this.type,
-      required this.origin});
+  final CharacterModel charachterModel;
+  const CharachterCardView({
+    super.key,
+    required this.charachterModel,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +26,7 @@ class CharachterCardView extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(6),
                   child: Image.network(
-                    image,
+                    charachterModel.image,
                     height: 100,
                   ),
                 ), // cliprrect is used to clip the image
@@ -42,13 +36,13 @@ class CharachterCardView extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _buildText(name, 14, FontWeight.w500),
+                      _buildText(charachterModel.name, 14, FontWeight.w500),
                       const SizedBox(height: 5),
                       _buildLabel('Köken'),
-                      _buildText(origin, 12, FontWeight.normal),
+                      _buildText(charachterModel.origin.name, 12, FontWeight.normal),
                       const SizedBox(height: 5),
                       _buildLabel('Durum'),
-                      _buildText('$status - $type', 12, FontWeight.normal),
+                      _buildText('${charachterModel.status} - ${charachterModel.species}', 12, FontWeight.normal),
                     ],
                   ),
                 )

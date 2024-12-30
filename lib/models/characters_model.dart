@@ -52,6 +52,7 @@ class CharacterModel {
   final String gender;
   final String image;
   final Location location;
+  final Origin origin;
   final List<String> episodes;
 
   CharacterModel(
@@ -61,6 +62,7 @@ class CharacterModel {
       required this.species,
       required this.gender,
       required this.image,
+      required this.origin,
       required this.location,
       required this.episodes});
 
@@ -71,6 +73,7 @@ class CharacterModel {
         species = json['species'],
         gender = json['gender'],
         image = json['image'],
+        origin = Origin(name: json['origin']['name'], url: json['origin']['url']),
         location = Location(
             name: json['location']['name'], url: json['location']['url']),
         episodes = List<String>.from(json['episode']);
@@ -83,6 +86,17 @@ class Location {
   Location({required this.name, required this.url});
 
   Location.fromJson(Map<String, dynamic> json)
+      : name = json['name'],
+        url = json['url'];
+}
+
+class Origin {
+  final String name;
+  final String url;
+
+  Origin({required this.name, required this.url});
+
+  Origin.fromJson(Map<String, dynamic> json)
       : name = json['name'],
         url = json['url'];
 }
