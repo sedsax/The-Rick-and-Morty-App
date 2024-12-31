@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ricky_and_mortypp/views/screens/characters_view/characters_viewmodel.dart';
-import 'package:ricky_and_mortypp/views/widgets/charachter_card_view.dart';
+import 'package:ricky_and_mortypp/views/widgets/character_card_list_view.dart';
 
 class CharactersView extends StatefulWidget {
   const CharactersView({super.key});
@@ -33,18 +33,11 @@ class _CharactersViewState extends State<CharactersView> {
                       child: CircularProgressIndicator.adaptive(),
                     );
                   } else {
-                    return Flexible(
-                      child: ListView.builder(
-                        itemCount: viewModel.charactersModel!.results.length,
-                        itemBuilder: (context, index) {
-                          final characterModel =
-                              viewModel.charactersModel!.results[index];
-                          return CharachterCardView(
-                            charachterModel: characterModel,
-                          );
-                        },
-                      ),
-                    );
+                    return CharacterCardListView(
+                        characters: viewModel.charactersModel!.results,
+                        onLoadMore: () => viewModel.getMoreCharacters(),
+                        loadMore: viewModel.loadMore
+                        );
                   }
                 },
               )

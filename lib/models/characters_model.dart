@@ -1,5 +1,5 @@
 class CharachtersModel {
-  final CharacterInfo info;
+  CharacterInfo info;
   final List<CharacterModel> results;
 
   CharachtersModel({required this.info, required this.results});
