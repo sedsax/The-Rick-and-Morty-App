@@ -19,28 +19,21 @@ class _CharactersViewState extends State<CharactersView> {
 
   @override
   Widget build(BuildContext context) {
+    final viewModel = context.watch<CharactersViewModel>();
     return Scaffold(
       body: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 17),
           child: Column(
             children: [
-              _searchInputWidget(context),
-              Consumer<CharactersViewModel>(
-                builder: (context, viewModel, child) {
-                  if (viewModel.charactersModel == null) {
-                    return const Center(
-                      child: CircularProgressIndicator.adaptive(),
-                    );
-                  } else {
-                    return CharacterCardListView(
-                        characters: viewModel.charactersModel!.results,
-                        onLoadMore: () => viewModel.getMoreCharacters(),
-                        loadMore: viewModel.loadMore
-                        );
-                  }
-                },
-              )
+              _searchInputWidget(context, viewModel: viewModel),
+              viewModel.charactersModel == null
+                  ? const CircularProgressIndicator.adaptive()
+                  : CharacterCardListView(
+                      characters: viewModel.charactersModel!.results,
+                      onLoadMore: () => viewModel.getMoreCharacters(),
+                      loadMore: viewModel.loadMore,
+                    ),
             ],
           ),
         ),
@@ -48,13 +41,15 @@ class _CharactersViewState extends State<CharactersView> {
     );
   }
 
-  Widget _searchInputWidget(BuildContext context) {
+  Widget _searchInputWidget(BuildContext context, {required CharactersViewModel viewModel}) {
     return Padding(
       padding: const EdgeInsets.only(top: 12, bottom: 7),
-      child: TextField(
+      child: TextFormField(
+        textInputAction: TextInputAction.search,
+        onFieldSubmitted: viewModel.getCharactersBySearch,
         decoration: InputDecoration(
-          labelText: 'Karakterlerde Ara',
-          labelStyle: TextStyle(color: Theme.of(context).colorScheme.onSurface),
+          hintText: 'Karakterlerde Ara',
+          hintStyle: TextStyle(color: Theme.of(context).colorScheme.onSurface),
           border: const OutlineInputBorder(),
           prefixIcon: const Icon(Icons.search),
           suffixIcon: IconButton(

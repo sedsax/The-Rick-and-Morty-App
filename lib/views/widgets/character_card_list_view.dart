@@ -29,7 +29,7 @@ class _CharacterCardListViewState extends State<CharacterCardListView> {
     _scrollController.addListener(() {
       final maxScroll = _scrollController.position.maxScrollExtent;
       final currentPosition = _scrollController.position.pixels;
-      const int delta = 50;
+      const int delta = 200;
 
       if (maxScroll - currentPosition <= delta) {
         widget.onLoadMore();
