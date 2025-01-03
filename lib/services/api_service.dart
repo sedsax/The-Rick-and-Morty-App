@@ -12,4 +12,13 @@ class ApiService {
       rethrow;
     }
   }
+
+    Future<CharachtersModel> getCharacterById(int id) async {
+    try {
+      final response = await _dio.get('character/$id');
+      return CharachtersModel.fromJson(response.data);
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

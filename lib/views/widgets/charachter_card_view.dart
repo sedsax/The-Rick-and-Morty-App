@@ -5,9 +5,12 @@ import 'package:ricky_and_mortypp/services/shared_preferences_sevice.dart';
 
 class CharachterCardView extends StatefulWidget {
   final CharacterModel charachterModel;
+  final VoidCallback? onFavoriteToggle;
+
   const CharachterCardView({
     super.key,
     required this.charachterModel,
+    this.onFavoriteToggle,
   });
 
   @override
@@ -33,6 +36,9 @@ class _CharachterCardViewState extends State<CharachterCardView> {
       _preferencesService.saveCharachter(widget.charachterModel.id);
     } else {
       _preferencesService.removeCharachter(widget.charachterModel.id);
+    }
+    if (widget.onFavoriteToggle != null) {
+      widget.onFavoriteToggle!();
     }
   }
 
@@ -86,7 +92,7 @@ class _CharachterCardViewState extends State<CharachterCardView> {
             onPressed: toggleFavorite,
             icon: Icon(
               isFavorite ? Icons.bookmark : Icons.bookmark_border,
-              color: isFavorite ? Colors.blue : Colors.grey,
+              color: Colors.blue,
             ),
           ),
         ],

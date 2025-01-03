@@ -33,17 +33,6 @@ class CharacterInfo {
         prev = json['prev'];
 }
 
-/*
-  factory CharacterInfo.fromJson(Map<String, dynamic> json) {
-    return CharacterInfo(
-      count: json['count'],
-      pages: json['pages'],
-      next: json['next'],
-      prev: json['prev'],
-    );
-  }
-*/
-
 class CharacterModel {
   final int id;
   final String name;
