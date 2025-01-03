@@ -7,9 +7,17 @@ class PreferencesService {
 
   final String _charachterKey = 'charachter';
 
-  void saveCharachter(int id) async{
+  Future<void> saveCharachter(int id) async {
     final charachtersList = prefs.getStringList(_charachterKey) ?? [];
-    charachtersList.add(id.toString());
+    if (!charachtersList.contains(id.toString())) {
+      charachtersList.add(id.toString());
+      await prefs.setStringList(_charachterKey, charachtersList);
+    }
+  }
+
+  Future<void> removeCharachter(int id) async {
+    final charachtersList = prefs.getStringList(_charachterKey) ?? [];
+    charachtersList.remove(id.toString());
     await prefs.setStringList(_charachterKey, charachtersList);
   }
 
@@ -18,5 +26,8 @@ class PreferencesService {
     return charachtersList.map((e) => int.parse(e)).toList();
   }
 
-
+  bool isCharachterSaved(int id) {
+    final charachtersList = prefs.getStringList(_charachterKey) ?? [];
+    return charachtersList.contains(id.toString());
+  }
 }

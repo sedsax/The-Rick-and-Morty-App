@@ -1,12 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:ricky_and_mortypp/app/locator.dart';
 import 'package:ricky_and_mortypp/models/characters_model.dart';
+import 'package:ricky_and_mortypp/services/shared_preferences_sevice.dart';
 
-class CharachterCardView extends StatelessWidget {
+class CharachterCardView extends StatefulWidget {
   final CharacterModel charachterModel;
   const CharachterCardView({
     super.key,
     required this.charachterModel,
   });
+
+  @override
+  State<CharachterCardView> createState() => _CharachterCardViewState();
+}
+
+class _CharachterCardViewState extends State<CharachterCardView> {
+  late bool isFavorite;
+  final PreferencesService _preferencesService = locator<PreferencesService>();
+
+  @override
+  void initState() {
+    super.initState();
+    isFavorite =
+        _preferencesService.isCharachterSaved(widget.charachterModel.id);
+  }
+
+  void toggleFavorite() {
+    setState(() {
+      isFavorite = !isFavorite;
+    });
+    if (isFavorite) {
+      _preferencesService.saveCharachter(widget.charachterModel.id);
+    } else {
+      _preferencesService.removeCharachter(widget.charachterModel.id);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +54,7 @@ class CharachterCardView extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(6),
                   child: Image.network(
-                    charachterModel.image,
+                    widget.charachterModel.image,
                     height: 100,
                   ),
                 ), // cliprrect is used to clip the image
@@ -36,13 +64,18 @@ class CharachterCardView extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _buildText(charachterModel.name, 14, FontWeight.w500),
+                      _buildText(
+                          widget.charachterModel.name, 14, FontWeight.w500),
                       const SizedBox(height: 5),
                       _buildLabel('Köken'),
-                      _buildText(charachterModel.origin.name, 12, FontWeight.normal),
+                      _buildText(widget.charachterModel.origin.name, 12,
+                          FontWeight.normal),
                       const SizedBox(height: 5),
                       _buildLabel('Durum'),
-                      _buildText('${charachterModel.status} - ${charachterModel.species}', 12, FontWeight.normal),
+                      _buildText(
+                          '${widget.charachterModel.status} - ${widget.charachterModel.species}',
+                          12,
+                          FontWeight.normal),
                     ],
                   ),
                 )
@@ -50,8 +83,11 @@ class CharachterCardView extends StatelessWidget {
             ),
           ),
           IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.bookmark_border),
+            onPressed: toggleFavorite,
+            icon: Icon(
+              isFavorite ? Icons.bookmark : Icons.bookmark_border,
+              color: isFavorite ? Colors.blue : Colors.grey,
+            ),
           ),
         ],
       ),
