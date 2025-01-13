@@ -13,6 +13,12 @@ class PreferencesService {
     await prefs.setStringList(_charachterKey, charachtersList);
   }
 
+  void removeCharachter(int id) async{
+    final charachtersList = prefs.getStringList(_charachterKey) ?? [];
+    charachtersList.remove(id.toString());
+    await prefs.setStringList(_charachterKey, charachtersList);
+  }
+
   List<int> getSavedCharachters() {
     final charachtersList = prefs.getStringList(_charachterKey) ?? [];
     return charachtersList.map((e) => int.parse(e)).toList();

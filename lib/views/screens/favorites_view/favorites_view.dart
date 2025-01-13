@@ -1,12 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:ricky_and_mortypp/views/screens/favorites_view/favorites_viewmodel.dart';
+import 'package:ricky_and_mortypp/views/widgets/character_card_list_view.dart';
 
-class FavoritesView extends StatelessWidget {
+class FavoritesView extends StatefulWidget {
   const FavoritesView({super.key});
 
   @override
+  State<FavoritesView> createState() => _FavoritesViewState();
+}
+
+class _FavoritesViewState extends State<FavoritesView> {
+  @override
+  void initState() {
+    context.read<FavoritesViewmodel>().getFavorites();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Favorites View'),
+    final viewModel = context.watch<FavoritesViewmodel>();
+    return Scaffold(
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 17),
+          child: viewModel.charachterList.isEmpty
+              ? const CircularProgressIndicator.adaptive()
+              : Column(
+                  children: [
+                    CharacterCardListView(
+                      characters: viewModel.charachterList,
+                      onLoadMore: () {},
+                    )
+                  ],
+                ),
+        ),
+      ),
     );
   }
 }

@@ -12,4 +12,16 @@ class ApiService {
       rethrow;
     }
   }
+
+    Future<List<CharacterModel>> getMultipleCharacters(List<int> idList) async {
+    try {
+      final response = await _dio.get('character/${idList.join(',')}');
+      return (response.data as List)
+          .map((e) => CharacterModel.fromJson(e))
+          .toList();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
 }
