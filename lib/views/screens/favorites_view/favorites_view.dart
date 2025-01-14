@@ -13,29 +13,33 @@ class FavoritesView extends StatefulWidget {
 class _FavoritesViewState extends State<FavoritesView> {
   @override
   void initState() {
-    context.read<FavoritesViewmodel>().getFavorites();
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<FavoritesViewmodel>().getFavorites();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = context.watch<FavoritesViewmodel>();
-    return Scaffold(
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 17),
-          child: viewModel.charachterList.isEmpty
-              ? const CircularProgressIndicator.adaptive()
-              : Column(
-                  children: [
-                    CharacterCardListView(
-                      characters: viewModel.charachterList,
-                      onLoadMore: () {},
-                    )
-                  ],
-                ),
+    return Consumer<FavoritesViewmodel>(builder: (context, viewModel, child) {
+      return Scaffold(
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 17),
+            child: Column(
+              children: [
+                viewModel.isLoading
+                    ? const CircularProgressIndicator.adaptive()
+                    : viewModel.charachterList.isEmpty
+                        ? const Text('No favorites added.')
+                        : CharacterCardListView(
+                            characters: viewModel.charachterList,
+                          ),
+              ],
+            ),
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 }

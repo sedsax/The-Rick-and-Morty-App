@@ -13,12 +13,18 @@ class ApiService {
     }
   }
 
-    Future<List<CharacterModel>> getMultipleCharacters(List<int> idList) async {
+  Future<List<CharacterModel>> getMultipleCharacters(List<int> idList) async {
     try {
       final response = await _dio.get('character/${idList.join(',')}');
-      return (response.data as List)
-          .map((e) => CharacterModel.fromJson(e))
-          .toList();
+      if (response.data is List) {
+        return (response.data as List)
+            .map((e) => CharacterModel.fromJson(e))
+            .toList();
+      } else if (response.data is Map) {
+        return [CharacterModel.fromJson(response.data)];
+      } else {
+        throw Exception('Unexpected response format');
+      }
     } catch (e) {
       rethrow;
     }
