@@ -48,7 +48,7 @@ class _CharachterCardViewState extends State<CharachterCardView> {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(6),
                   child: Image.network(
-                    widget.charachterModel.image,
+                    widget.charachterModel.image!,
                     height: 100,
                   ),
                 ),

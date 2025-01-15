@@ -14,7 +14,9 @@ class _FavoritesViewState extends State<FavoritesView> {
   @override
   void initState() {
     super.initState();
-    context.read<FavoritesViewmodel>().getFavourites();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<FavoritesViewmodel>().getFavourites();
+    });
   }
 
   @override
@@ -25,7 +27,7 @@ class _FavoritesViewState extends State<FavoritesView> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 18),
           child: viewModel.characters.isEmpty
-              ? const CircularProgressIndicator.adaptive()
+              ? const Text('Favori karakterinizi ekleyin.')
               : Column(
                   children: [
                     CharacterCardListView(characters: viewModel.characters)

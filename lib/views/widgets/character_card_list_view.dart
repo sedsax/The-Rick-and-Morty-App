@@ -39,7 +39,6 @@ class _CharacterCardListViewState extends State<CharacterCardListView> {
   void _getFavorites() async {
     _favoritedList = locator<PreferencesService>().getSavedCharacters();
     _setIsLoading(false);
-    setState(() {});
   }
 
   void _detectScrollBottom() {
@@ -58,6 +57,8 @@ class _CharacterCardListViewState extends State<CharacterCardListView> {
   Widget build(BuildContext context) {
     if (_isLoading) {
       return const CircularProgressIndicator.adaptive();
+    } else if (widget.characters.isEmpty) {
+      return Center(child: Text('Favori karakterleriniz bulunmamaktadır.'));
     } else {
       return Flexible(
         child: ListView.builder(
@@ -69,7 +70,8 @@ class _CharacterCardListViewState extends State<CharacterCardListView> {
             return Column(
               children: [
                 CharachterCardView(
-                  charachterModel: characterModel, isFavorited: isFavorited,
+                  charachterModel: characterModel,
+                  isFavorited: isFavorited,
                 ),
                 if (widget.loadMore && index == widget.characters.length - 1)
                   const LinearProgressIndicator()

@@ -33,50 +33,42 @@ class CharacterInfo {
         prev = json['prev'];
 }
 
-/*
-  factory CharacterInfo.fromJson(Map<String, dynamic> json) {
-    return CharacterInfo(
-      count: json['count'],
-      pages: json['pages'],
-      next: json['next'],
-      prev: json['prev'],
-    );
-  }
-*/
-
 class CharacterModel {
   final int id;
   final String name;
   final String status;
   final String species;
   final String gender;
-  final String image;
+  final String? image;
   final Location location;
   final Origin origin;
   final List<String> episodes;
 
-  CharacterModel(
-      {required this.id,
-      required this.name,
-      required this.status,
-      required this.species,
-      required this.gender,
-      required this.image,
-      required this.origin,
-      required this.location,
-      required this.episodes});
+  CharacterModel({
+    required this.id,
+    required this.name,
+    required this.status,
+    required this.species,
+    required this.gender,
+    this.image,
+    required this.origin,
+    required this.location,
+    required this.episodes,
+  });
 
-  CharacterModel.fromJson(Map<String, dynamic> json)
-      : id = json['id'],
-        name = json['name'],
-        status = json['status'],
-        species = json['species'],
-        gender = json['gender'],
-        image = json['image'],
-        origin = Origin(name: json['origin']['name'], url: json['origin']['url']),
-        location = Location(
-            name: json['location']['name'], url: json['location']['url']),
-        episodes = List<String>.from(json['episode']);
+  factory CharacterModel.fromJson(Map<String, dynamic> json) {
+    return CharacterModel(
+      id: json['id'] ?? 0,
+      name: json['name'] ?? '',
+      status: json['status'] ?? '',
+      species: json['species'] ?? '',
+      gender: json['gender'] ?? '',
+      image: json['image'], // Varsayılan resim URL'si
+      origin: Origin.fromJson(json['origin'] ?? {}),
+      location: Location.fromJson(json['location'] ?? {}),
+      episodes: List<String>.from(json['episode'] ?? []),
+    );
+  }
 }
 
 class Location {
@@ -85,9 +77,12 @@ class Location {
 
   Location({required this.name, required this.url});
 
-  Location.fromJson(Map<String, dynamic> json)
-      : name = json['name'],
-        url = json['url'];
+  factory Location.fromJson(Map<String, dynamic> json) {
+    return Location(
+      name: json['name'] ?? '',
+      url: json['url'] ?? '',
+    );
+  }
 }
 
 class Origin {
@@ -96,7 +91,10 @@ class Origin {
 
   Origin({required this.name, required this.url});
 
-  Origin.fromJson(Map<String, dynamic> json)
-      : name = json['name'],
-        url = json['url'];
+  factory Origin.fromJson(Map<String, dynamic> json) {
+    return Origin(
+      name: json['name'] ?? '',
+      url: json['url'] ?? '',
+    );
+  }
 }

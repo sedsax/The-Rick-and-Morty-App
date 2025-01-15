@@ -13,10 +13,14 @@ class FavoritesViewmodel extends ChangeNotifier {
 
   List<CharacterModel> get characters => _characters;
 
-  void getFavourites() {
-    _favourites = _preferencesService.getSavedCharacters();
+void getFavourites() {
+  _favourites = _preferencesService.getSavedCharacters();
+  if (_favourites.isEmpty) {
+    _characters = [];
+  } else {
     _getCharacters();
   }
+}
 
   void _getCharacters() async {
     _characters = await _apiService.getMultipleCharacters(_favourites);
