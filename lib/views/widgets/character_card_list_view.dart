@@ -37,7 +37,7 @@ class _CharacterCardListViewState extends State<CharacterCardListView> {
   }
 
   void _getFavorites() async {
-    _favoritedList = locator<PreferencesService>().getSavedCharachters();
+    _favoritedList = locator<PreferencesService>().getSavedCharacters();
     _setIsLoading(false);
     setState(() {});
   }

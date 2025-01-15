@@ -21,10 +21,10 @@ class _CharachterCardViewState extends State<CharachterCardView> {
 
   void _favoriteCharacter(){
     if(widget.isFavorited){
-      locator<PreferencesService>().removeCharachter(widget.charachterModel.id);
+      locator<PreferencesService>().removeCharacter(widget.charachterModel.id);
       widget.isFavorited = false;
     }else{
-      locator<PreferencesService>().saveCharachter(widget.charachterModel.id);
+      locator<PreferencesService>().saveCharacter(widget.charachterModel.id);
       widget.isFavorited = true;
     }
     setState(() {});

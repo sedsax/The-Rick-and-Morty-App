@@ -5,24 +5,27 @@ class PreferencesService {
 
   PreferencesService({required this.prefs});
 
-  final String _charachterKey = 'charachter';
+  final String _characterKey = 'charachters';
 
-  void saveCharachter(int id) async{
-    final charachtersList = prefs.getStringList(_charachterKey) ?? [];
-    charachtersList.add(id.toString());
-    await prefs.setStringList(_charachterKey, charachtersList);
+ void storeCharacters(List<String> characters) async {
+    await prefs.setStringList(_characterKey, characters);
   }
 
-  void removeCharachter(int id) async{
-    final charachtersList = prefs.getStringList(_charachterKey) ?? [];
-    charachtersList.remove(id.toString());
-    await prefs.setStringList(_charachterKey, charachtersList);
+  void saveCharacter(int id) async {
+    final charactersList = prefs.getStringList(_characterKey) ?? [];
+    charactersList.add(id.toString());
+    storeCharacters(charactersList);
   }
 
-  List<int> getSavedCharachters() {
-    final charachtersList = prefs.getStringList(_charachterKey) ?? [];
-    return charachtersList.map((e) => int.parse(e)).toList();
+  void removeCharacter(int id) async {
+    final charactersList = prefs.getStringList(_characterKey) ?? [];
+    charactersList.remove(id.toString());
+    storeCharacters(charactersList);
   }
 
+  List<int> getSavedCharacters() {
+    final charactersList = prefs.getStringList(_characterKey) ?? [];
+    return charactersList.map((e) => int.parse(e)).toList();
+  }
 
 }
