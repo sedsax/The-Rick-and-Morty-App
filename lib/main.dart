@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:ricky_and_mortypp/app/locator.dart';
 import 'package:ricky_and_mortypp/app/router.dart';
 import 'package:provider/provider.dart';
+import 'package:ricky_and_mortypp/services/auth_service.dart';
 import 'package:ricky_and_mortypp/views/screens/characters_view/characters_viewmodel.dart';
 import 'package:ricky_and_mortypp/views/screens/favorites_view/favorites_viewmodel.dart';
 import 'package:ricky_and_mortypp/app/theme.dart';
@@ -12,8 +13,9 @@ void main() async {
   await Firebase.initializeApp();
   await setupLocator();
   runApp(
-    MultiProvider(
+       MultiProvider(
       providers: [
+        Provider<AuthService>(create: (_) => locator<AuthService>()), 
         ChangeNotifierProvider(
           create: (context) => CharactersViewModel(),
         ),

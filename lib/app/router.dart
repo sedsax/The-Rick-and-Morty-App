@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ricky_and_mortypp/views/app_view.dart';
@@ -23,6 +24,26 @@ class AppRoutes {
 final router = GoRouter(
   navigatorKey: _routerKey,
   initialLocation: AppRoutes.login,
+  redirect: (context, state) {
+    final user = FirebaseAuth
+        .instance.currentUser; // Kullanıcı oturum durumunu kontrol et
+    final isLoggedIn = user != null; // Kullanıcı giriş yapmış mı?
+
+    final isLoginRoute =
+        state.matchedLocation == AppRoutes.login; // Giriş sayfasında mı?
+    final isSignUpRoute =
+        state.matchedLocation == '/signup'; // Kayıt sayfasında mı?
+
+    if (!isLoggedIn && !isLoginRoute && !isSignUpRoute) {
+      return AppRoutes.login; // Giriş yapmamışsa giriş sayfasına yönlendir
+    }
+
+    if (isLoggedIn && (isLoginRoute || isSignUpRoute)) {
+      return AppRoutes.characters; // Giriş yapmışsa ana sayfaya yönlendir
+    }
+
+    return null; // Yönlendirme yapma
+  },
   routes: [
     GoRoute(
       path: AppRoutes.login,

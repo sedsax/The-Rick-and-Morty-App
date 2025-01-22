@@ -1,6 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+import 'package:ricky_and_mortypp/services/auth_service.dart';
 import 'package:ricky_and_mortypp/app/router.dart';
 
 class SignUpView extends StatefulWidget {
@@ -11,7 +13,6 @@ class SignUpView extends StatefulWidget {
 }
 
 class _SignUpViewState extends State<SignUpView> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -19,10 +20,10 @@ class _SignUpViewState extends State<SignUpView> {
   void _signUp() async {
     if (_formKey.currentState?.validate() ?? false) {
       try {
-        UserCredential userCredential =
-            await _auth.createUserWithEmailAndPassword(
-          email: _emailController.text,
-          password: _passwordController.text,
+        final authService = Provider.of<AuthService>(context, listen: false);
+        await authService.signUpWithEmailAndPassword(
+          _emailController.text,
+          _passwordController.text,
         );
         if (mounted) {
           context.go(AppRoutes.login);
@@ -99,7 +100,7 @@ class _SignUpViewState extends State<SignUpView> {
               children: [
                 Container(
                   decoration: BoxDecoration(
-                    color: Colors.white, // TextFormField arka planı beyaz
+                    color: Colors.white,
                     borderRadius: BorderRadius.circular(20.0),
                   ),
                   child: Padding(
@@ -107,14 +108,11 @@ class _SignUpViewState extends State<SignUpView> {
                     child: TextFormField(
                       controller: _emailController,
                       validator: _validateEmail,
-                      style: const TextStyle(
-                          color: Colors.blue), // Yazı rengi mavi
+                      style: const TextStyle(color: Colors.blue),
                       decoration: InputDecoration(
-                        prefixIcon: const Icon(Icons.mail,
-                            color: Colors.blue), // İkon rengi mavi
+                        prefixIcon: const Icon(Icons.mail, color: Colors.blue),
                         hintText: 'Email',
-                        hintStyle: const TextStyle(
-                            color: Colors.blue), // Hint metni rengi mavi
+                        hintStyle: const TextStyle(color: Colors.blue),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.0),
                           borderSide: BorderSide.none,
@@ -126,7 +124,7 @@ class _SignUpViewState extends State<SignUpView> {
                 const SizedBox(height: 10),
                 Container(
                   decoration: BoxDecoration(
-                    color: Colors.white, // TextFormField arka planı beyaz
+                    color: Colors.white,
                     borderRadius: BorderRadius.circular(20.0),
                   ),
                   child: Padding(
@@ -135,14 +133,11 @@ class _SignUpViewState extends State<SignUpView> {
                       controller: _passwordController,
                       obscureText: true,
                       validator: _validatePassword,
-                      style: const TextStyle(
-                          color: Colors.blue), // Yazı rengi mavi
+                      style: const TextStyle(color: Colors.blue),
                       decoration: InputDecoration(
-                        prefixIcon: const Icon(Icons.lock,
-                            color: Colors.blue), // İkon rengi mavi
+                        prefixIcon: const Icon(Icons.lock, color: Colors.blue),
                         hintText: 'Password',
-                        hintStyle: const TextStyle(
-                            color: Colors.blue), // Hint metni rengi mavi
+                        hintStyle: const TextStyle(color: Colors.blue),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.0),
                           borderSide: BorderSide.none,
@@ -156,11 +151,11 @@ class _SignUpViewState extends State<SignUpView> {
                   width: double.infinity,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white, // Buton arka planı beyaz
-                      foregroundColor: Colors.blue, // Buton metin rengi mavi
+                      backgroundColor: Colors.white,
+                      foregroundColor: Colors.blue,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(
-                            20.0), // Buton kenarlarını oval yap
+                            20.0), 
                       ),
                     ),
                     onPressed: _signUp,

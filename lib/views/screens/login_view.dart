@@ -1,6 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+import 'package:ricky_and_mortypp/services/auth_service.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -10,7 +12,6 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -18,9 +19,10 @@ class _LoginViewState extends State<LoginView> {
   void _login() async {
     if (_formKey.currentState?.validate() ?? false) {
       try {
-        UserCredential userCredential = await _auth.signInWithEmailAndPassword(
-          email: _emailController.text,
-          password: _passwordController.text,
+        final authService = Provider.of<AuthService>(context, listen: false);
+        await authService.signInWithEmailAndPassword(
+          _emailController.text,
+          _passwordController.text,
         );
         context.go('/characters');
       } catch (e) {
