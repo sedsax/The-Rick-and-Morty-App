@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:ricky_and_mortypp/app/locator.dart';
 import 'package:ricky_and_mortypp/app/router.dart';
@@ -8,6 +9,7 @@ import 'package:ricky_and_mortypp/app/theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   await setupLocator();
   runApp(
     MultiProvider(

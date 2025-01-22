@@ -4,14 +4,17 @@ import 'package:ricky_and_mortypp/views/app_view.dart';
 import 'package:ricky_and_mortypp/views/screens/characters_view/characters_view.dart';
 import 'package:ricky_and_mortypp/views/screens/favorites_view/favorites_view.dart';
 import 'package:ricky_and_mortypp/views/screens/locations_view/locations_view.dart';
+import 'package:ricky_and_mortypp/views/screens/login_view.dart';
 import 'package:ricky_and_mortypp/views/screens/sections_view/sections_view.dart';
+import 'package:ricky_and_mortypp/views/screens/signup_view.dart';
 
 final _routerKey = GlobalKey<NavigatorState>();
 
 class AppRoutes {
   AppRoutes._();
 
-  static const characters = '/';
+  static const login = '/';
+  static const characters = '/characters';
   static const favorites = '/favorites';
   static const locations = '/locations';
   static const sections = '/sections';
@@ -19,8 +22,16 @@ class AppRoutes {
 
 final router = GoRouter(
   navigatorKey: _routerKey,
-  initialLocation: AppRoutes.characters,
+  initialLocation: AppRoutes.login,
   routes: [
+    GoRoute(
+      path: AppRoutes.login,
+      builder: (context, state) => const LoginView(),
+    ),
+    GoRoute(
+      path: '/signup',
+      builder: (context, state) => const SignUpView(),
+    ),
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) =>
           AppView(navigationShell: navigationShell),
