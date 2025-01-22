@@ -58,7 +58,7 @@ class _CharacterCardListViewState extends State<CharacterCardListView> {
     if (_isLoading) {
       return const CircularProgressIndicator.adaptive();
     } else if (widget.characters.isEmpty) {
-      return Center(child: Text('Favori karakterleriniz bulunmamaktadır.'));
+      return const Center(child: Text('Favori karakterleriniz bulunmamaktadır.'));
     } else {
       return Flexible(
         child: ListView.builder(
