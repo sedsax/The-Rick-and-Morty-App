@@ -51,6 +51,9 @@ build/
 # .gitignore dosyası
 # Firebase ile ilgili dosyalar
 firebase/
+firebase.json
+firebase-debug.json
+firebase_options.dart
 google-services.json
 GoogleService-Info.plist
 
@@ -58,6 +61,12 @@ GoogleService-Info.plist
 android/
 ios/
 web/
+macos/
+windows/
+linux/
+GeneratedPluginRegistrant.java
+GeneratedPluginRegistrant.swift
+
 
 # iOS specific
 ios/Flutter/.last_build_id
