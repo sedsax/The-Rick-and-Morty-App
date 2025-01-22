@@ -48,6 +48,17 @@ build/
 /android/app/profile
 /android/app/release
 
+# .gitignore dosyası
+# Firebase ile ilgili dosyalar
+firebase/
+google-services.json
+GoogleService-Info.plist
+
+# Diğer klasörler
+android/
+ios/
+web/
+
 # iOS specific
 ios/Flutter/.last_build_id
 ios/Pods/
