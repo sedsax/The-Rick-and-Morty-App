@@ -52,11 +52,21 @@ class AppView extends StatelessWidget {
   AppBar _appBarWidget(BuildContext context) {
     final authService =
         Provider.of<AuthService>(context, listen: false); // AuthService'i al
+    final email = authService.userEmail;
+    final username =
+        email != null ? email.split('@').first.toUpperCase() : 'Kullanıcı';
+
+    String title;
+    if (navigationShell.currentIndex == 0) {
+      title = 'Hoş geldin, $username';
+    } else {
+      title = 'Ricky and Morty';
+    }
 
     return AppBar(
-      title: const Text(
-        'Ricky and Morty',
-        style: TextStyle(
+      title: Text(
+        title,
+        style: const TextStyle(
           fontSize: 22,
           fontWeight: FontWeight.w500,
         ),

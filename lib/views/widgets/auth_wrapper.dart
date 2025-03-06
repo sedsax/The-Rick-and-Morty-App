@@ -6,6 +6,8 @@ import '../../services/auth_service.dart';
 import '../screens/login_view.dart';
 
 class AuthWrapper extends StatelessWidget {
+  const AuthWrapper({super.key});
+
   @override
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context);
@@ -14,11 +16,11 @@ class AuthWrapper extends StatelessWidget {
       stream: authService.authStateChanges,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator(); // Yükleniyor durumu
+          return const CircularProgressIndicator(); // Yükleniyor durumu
         } else if (snapshot.hasData) {
-          return CharactersView(); 
+          return const CharactersView(); 
         } else {
-          return LoginView(); // Kullanıcı giriş yapmamışsa giriş sayfasına yönlendir
+          return const LoginView(); // Kullanıcı giriş yapmamışsa giriş sayfasına yönlendir
         }
       },
     );
