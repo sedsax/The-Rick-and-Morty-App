@@ -10,10 +10,10 @@ import 'package:ricky_and_mortypp/app/theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  // await Firebase.initializeApp(); // Firebase başlatma işlemini geçici olarak devre dışı bırakıyoruz
   await setupLocator();
   runApp(
-       MultiProvider(
+    MultiProvider(
       providers: [
         Provider<AuthService>(create: (_) => locator<AuthService>()), 
         ChangeNotifierProvider(

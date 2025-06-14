@@ -1,36 +1,26 @@
-import 'package:firebase_auth/firebase_auth.dart';
-
 class AuthService {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  String? _email;
 
   // Kullanıcı oturum durumunu dinle
-  Stream<User?> get authStateChanges => _auth.authStateChanges();
+  Stream<String?> get authStateChanges => Stream.value(_email);
 
   // Kullanıcı giriş yapmış mı?
-  User? get currentUser => _auth.currentUser;
+  bool get isLoggedIn => _email != null;
 
   // Email ve şifre ile giriş yap
-  Future<UserCredential> signInWithEmailAndPassword(String email, String password) async {
-    return await _auth.signInWithEmailAndPassword(
-      email: email,
-      password: password,
-    );
+  Future<void> signInWithEmailAndPassword(String email, String password) async {
+    _email = email;
   }
 
   // Email ve şifre ile kayıt ol
-  Future<UserCredential> signUpWithEmailAndPassword(String email, String password) async {
-    return await _auth.createUserWithEmailAndPassword(
-      email: email,
-      password: password,
-    );
+  Future<void> signUpWithEmailAndPassword(String email, String password) async {
+    _email = email;
   }
 
   // Çıkış yap
   Future<void> signOut() async {
-    await _auth.signOut();
+    _email = null;
   }
 
-    String? get userEmail {
-    return _auth.currentUser?.email;
-  }
+  String? get userEmail => _email;
 }

@@ -1,37 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:ricky_and_mortypp/app/locator.dart';
+import 'package:provider/provider.dart';
 import 'package:ricky_and_mortypp/models/characters_model.dart';
-import 'package:ricky_and_mortypp/services/shared_preferences_sevice.dart';
+import 'package:ricky_and_mortypp/views/screens/favorites_view/favorites_viewmodel.dart';
 
-// ignore: must_be_immutable
-class CharachterCardView extends StatefulWidget {
+class CharachterCardView extends StatelessWidget {
   final CharacterModel charachterModel;
-  bool isFavorited;
-  CharachterCardView({
+
+  const CharachterCardView({
     super.key,
     required this.charachterModel,
-    this.isFavorited = false,
   });
 
   @override
-  State<CharachterCardView> createState() => _CharachterCardViewState();
-}
-
-class _CharachterCardViewState extends State<CharachterCardView> {
-
-  void _favoriteCharacter(){
-    if(widget.isFavorited){
-      locator<PreferencesService>().removeCharacter(widget.charachterModel.id);
-      widget.isFavorited = false;
-    }else{
-      locator<PreferencesService>().saveCharacter(widget.charachterModel.id);
-      widget.isFavorited = true;
-    }
-    setState(() {});
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final favoritesViewModel = context.watch<FavoritesViewmodel>();
+    final isFavorited = favoritesViewModel.isFavorite(charachterModel.id);
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 7),
       child: Stack(
@@ -48,23 +32,22 @@ class _CharachterCardViewState extends State<CharachterCardView> {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(6),
                   child: Image.network(
-                    widget.charachterModel.image!,
+                    charachterModel.image!,
                     height: 100,
                   ),
                 ),
                 Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 6, horizontal: 17),
+                  padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 17),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _buildText(widget.charachterModel.name, 14, FontWeight.w500),
+                      _buildText(charachterModel.name, 14, FontWeight.w500),
                       const SizedBox(height: 5),
                       _buildLabel('Köken'),
-                      _buildText(widget.charachterModel.origin.name, 12, FontWeight.normal),
+                      _buildText(charachterModel.origin.name, 12, FontWeight.normal),
                       const SizedBox(height: 5),
                       _buildLabel('Durum'),
-                      _buildText('${widget.charachterModel.status} - ${widget.charachterModel.species}', 12, FontWeight.normal),
+                      _buildText('${charachterModel.status} - ${charachterModel.species}', 12, FontWeight.normal),
                     ],
                   ),
                 )
@@ -72,8 +55,8 @@ class _CharachterCardViewState extends State<CharachterCardView> {
             ),
           ),
           IconButton(
-            onPressed:() => _favoriteCharacter(),
-            icon: Icon(widget.isFavorited ? Icons.bookmark : Icons.bookmark_border),
+            onPressed: () => favoritesViewModel.toggleFavorite(charachterModel.id),
+            icon: Icon(isFavorited ? Icons.bookmark : Icons.bookmark_border),
           ),
         ],
       ),

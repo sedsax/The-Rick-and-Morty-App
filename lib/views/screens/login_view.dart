@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -26,24 +25,8 @@ class _LoginViewState extends State<LoginView> {
         );
         context.go('/characters');
       } catch (e) {
-        String errorMessage = 'Giriş işlemi sırasında bir hata oluştu';
-        if (e is FirebaseAuthException) {
-          switch (e.code) {
-            case 'user-not-found':
-              errorMessage = 'Kullanıcı bulunamadı.';
-              break;
-            case 'wrong-password':
-              errorMessage = 'Yanlış şifre.';
-              break;
-            case 'invalid-email':
-              errorMessage = 'Geçersiz email adresi.';
-              break;
-            default:
-              errorMessage = e.message ?? errorMessage;
-          }
-        }
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(errorMessage)),
+          const SnackBar(content: Text('Giriş işlemi sırasında bir hata oluştu')),
         );
       }
     }
