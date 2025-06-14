@@ -49,13 +49,6 @@ build/
 /android/app/release
 
 # .gitignore dosyası
-# Firebase ile ilgili dosyalar
-firebase/
-firebase.json
-firebase-debug.json
-firebase_options.dart
-google-services.json
-GoogleService-Info.plist
 
 # Diğer klasörler
 android/

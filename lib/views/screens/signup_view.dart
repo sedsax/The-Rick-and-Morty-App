@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -28,27 +27,11 @@ class _SignUpViewState extends State<SignUpView> {
         if (mounted) {
           context.go(AppRoutes.login);
         }
-      } on FirebaseAuthException catch (e) {
+      } catch (e) {
         String errorMessage = 'Kayıt işlemi sırasında bir hata oluştu';
-        if (e.code == 'weak-password') {
-          errorMessage = 'Şifre çok zayıf. Daha güçlü bir şifre seçin.';
-        } else if (e.code == 'email-already-in-use') {
-          errorMessage = 'Bu e-posta adresi zaten kayıtlı.';
-        } else if (e.code == 'invalid-email') {
-          errorMessage = 'Geçersiz e-posta adresi.';
-        }
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(errorMessage)),
-          );
-        }
-      } catch (e) {
-        print("Firebase Auth Error: $e");
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-                content: Text(
-                    'Kayıt işlemi sırasında bir hata oluştu: ${e.toString()}')),
           );
         }
       }
