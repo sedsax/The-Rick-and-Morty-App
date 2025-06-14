@@ -74,9 +74,8 @@ class AppView extends StatelessWidget {
       actions: [
         IconButton(
           icon: const Icon(Icons.settings),
-          onPressed: () async {
-            await authService.signOut(); // Çıkış yap
-            context.go('/login'); // Çıkış yapınca giriş sayfasına yönlendir
+          onPressed: () {
+            context.push('/settings'); // Ayarlar sayfasına yönlendir
           },
         ),
       ],

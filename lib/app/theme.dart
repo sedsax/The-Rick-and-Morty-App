@@ -17,4 +17,19 @@ class AppTheme {
           style: IconButton.styleFrom(foregroundColor: const Color(0xFF42B4CA)),
         ),
       );
+  static ThemeData get darkTheme => ThemeData(
+        fontFamily: 'Inter',
+        scaffoldBackgroundColor: Colors.black,
+        colorScheme: const ColorScheme.dark(
+          primary: Color(0xFF42B4CA),
+          secondary: Color(0xFF222222),
+          error: Color(0xFFEA7979),
+          surface: Color(0xFF222222),
+          onSurface: Color(0xFFE0E0E0),
+          tertiary: Color(0xFFB5C4C7),
+        ),
+        iconButtonTheme: IconButtonThemeData(
+          style: IconButton.styleFrom(foregroundColor: const Color(0xFF42B4CA)),
+        ),
+      );
 }
